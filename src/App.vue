@@ -1,28 +1,57 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <!-- <twitter-input />  -->
+    <!-- <password-input /> -->
+    <div>
+      {{ name | allCaps | lowercase | join(name, lastName) }}
+      <!-- {{ lastName | allCaps }} -->
+    </div>
+    <app-test>
+      <div slot-scope="slotProps">
+        {{ slotProps.color }}
+        {{ slotProps.lastName }}
+      </div>
+    </app-test>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+   
+import TwitterInput from './components/TwitterInput.vue'
+import PasswordInput from './components/PasswordInput.vue'
+import AppTest from './components/AppTest.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+   TwitterInput,
+   PasswordInput,
+   AppTest,
+  },
+  data(){
+    return{
+      name: 'Sandra',
+      lastName: 'Micevic'
+    }
+  },
+
+  filters: {
+    allCaps (value) {
+      if (!value) {
+        return ''
+      }
+      return value.toString().toUpperCase()
+    },
+    lowercase (value) {
+      if (!value) {
+        return ''
+      }
+      return value.toString().toLowerCase()
+    }, 
+    join (value, arg1, arg2) {
+      return `${value}+${arg1}+${arg2}`
+    }
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
